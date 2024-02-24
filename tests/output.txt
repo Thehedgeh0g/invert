@@ -1,0 +1,11 @@
+Running: invert.exe C:\Users\flipd\CLionProjects\invert\tests\matrix.txt 
+------------------Result----------------- 
+Inverted matrix:
+-0.027	0.065	0.049	
+-0.078	-0.059	-0.084	
+0.105	-0.006	0.035	
+========================================= 
+Running: invert.exe C:\Users\flipd\CLionProjects\invert\tests\matrix2.txt 
+------------------Result----------------- 
+Матрица вырожденная, обратной матрицы не существует.
+========================================= 
