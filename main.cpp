@@ -2,17 +2,15 @@
 #include <fstream>
 #include <iomanip>
 
-using namespace std;
-
 void printMatrix(double matrix[3][3])
 {
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
-            cout << fixed << setprecision(3) << matrix[i][j] << "\t";
+            std::cout << std::fixed << std::setprecision(3) << matrix[i][j] << "\t";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
@@ -24,8 +22,8 @@ void invertMatrix(double matrix[3][3], double result[3][3])
 
     if (det == 0)
     {
-        cerr << "\n"
-                "The matrix is singular; there is no inverse matrix." << endl;
+        std::cout << "\n"
+                "The matrix is singular; there is no inverse matrix.\n";
         exit(EXIT_FAILURE);
     }
 
@@ -41,24 +39,16 @@ void invertMatrix(double matrix[3][3], double result[3][3])
     }
 }
 
-int main(int argc, char *argv[])
+int Invert(const std::string& inputFilePath, double result[3][3])
 {
-    if (argc != 2)
-    {
-        cerr << "Invalid argument count \n " <<
-                "Usage: replace.exe " << argv[0] << " <matrix file>" << endl;
-        return EXIT_FAILURE;
-    }
-
-    ifstream inputFile(argv[1]);
+    std::ifstream inputFile(inputFilePath);
     if (!inputFile.is_open())
     {
-        cerr << "Can not open file " << argv[1] << endl;
+        std::cout << "Can not open file " << inputFilePath << std::endl;
         return EXIT_FAILURE;
     }
 
     double matrix[3][3];
-    double result[3][3];
 
     for (auto& i : matrix)
     {
@@ -66,7 +56,7 @@ int main(int argc, char *argv[])
         {
             if (!(inputFile >> j))
             {
-                cerr << "Can not read matrix from file" << endl;
+                std::cout << "Can not read matrix from file\n";
                 return EXIT_FAILURE;
             }
         }
@@ -75,8 +65,26 @@ int main(int argc, char *argv[])
     inputFile.close();
 
     invertMatrix(matrix, result);
+    return 0;
+}
 
-    cout << "Inverted matrix:" << endl;
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        std::cout << "Invalid argument count \n " <<
+                "Usage: replace.exe " << argv[0] << " <matrix file>\n";
+        return EXIT_FAILURE;
+    }
+
+    double result[3][3];
+
+    if (Invert(argv[1], result) == EXIT_FAILURE)
+    {
+        return EXIT_FAILURE;
+    }
+
+    std::cout << "Inverted matrix:\n";
     printMatrix(result);
 
     return 0;
